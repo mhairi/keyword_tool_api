@@ -6,7 +6,7 @@
 #' For more on how to use this see the Keyword Tool API documentation:
 #' http://keywordtool.io/api/documentation
 #'
-#' @param keywords A vector of keywords to analyse
+#' @param keywords A vector of keywords to analyse. Max size 800.
 #' @param api_key API key from keywordtool.io
 #' @param metrics_location Optional vector of location codes to get results from (see documentation for codes). Maximum 10 locations.
 #' @param metrics_language Optional vector of language to search with. See `language_codes` for list of codes. Maximum 5 languages.
@@ -40,6 +40,8 @@ get_search_volume <- function(keywords,
                               method           = c('get', 'post')){
 
   # Converting vector of keywords into JSON format
+  if (length(keywords) > 800) stop('A maximum 800 keywords are accepted in a single API request.')
+
   keywords <- paste0('"', keywords, '"')
   keywords <- paste(keywords, collapse = ',')
   keywords <- paste0('[', keywords, ']')
