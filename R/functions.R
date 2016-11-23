@@ -74,14 +74,14 @@ get_search_volume <- function(keywords,
   parameters <- Filter(function(x) !is.null(x), parameters)
 
   base_url <- 'http://api.keywordtool.io/v2/search/volume/google'
-  url <- httr::modify_url(base_url, query = parameters)
 
   if (method == 'get'){
+    url <- httr::modify_url(base_url, query = parameters)
     response <- httr::GET(url)
   }
 
   if (method == 'post'){
-    response <- httr::POST(url)
+    response <- httr::POST(base_url, body = parameters)
   }
 
   if (httr::http_type(response) != "application/json") {

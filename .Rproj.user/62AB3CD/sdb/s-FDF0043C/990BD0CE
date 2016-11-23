@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#' @export\nprint.keyword_tool_result <- function(x, ...){\n  cat('Status: ', x$response$status_code, '\\n', sep = '')\n  cat('Date: ',   format(x$response$date, \"%Y-%m-%d %H:%M\"), '\\n', sep = '')\n  contents <- try(Map(length, x$content$results))\n  if (!inherits(contents, 'try-error')){\n    cat('Content Lengths - \\n')\n    print(contents)\n  }\n}\n",
+    "created" : 1479927127600.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3494192092",
+    "id" : "990BD0CE",
+    "lastKnownWriteTime" : 1479929253,
+    "last_content_update" : 1479929253971,
+    "path" : "~/Documents/APIs/keywordtool/R/helpers.R",
+    "project_path" : "R/helpers.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
