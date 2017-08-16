@@ -7,7 +7,7 @@
 #' http://keywordtool.io/api/documentation
 #'
 #' @param keywords A vector of keywords to analyse. Max size 800.
-#' @param api_key API key from keywordtool.io
+#' @param api_key API key from keywordtool.io. If you have 'keyword_tool_key' set in options, then you do not need to provide this.
 #' @param metrics_location Optional vector of location codes to get results from (see documentation for codes). Maximum 10 locations.
 #' @param metrics_language Optional vector of language to search with. See `language_codes` for list of codes. Maximum 5 languages.
 #' @param metrics_network Search network that will be used to pull the search volume data.
@@ -19,11 +19,10 @@
 #'
 #' @examples \dontrun{
 #'
-#' keyword_tool_key <- '1234'
+#' options(keyword_tool_key = '1234')
 #'
 #' results <-
 #' get_search_volume(keywords = c('scottish salmon', 'scotland fishing'),
-#'                   api_key = keyword_tool_key,
 #'                   metrics_location = c(20339,20342, 2840), #Scotland, England and US
 #'                   metrics_network = 'googlesearch',
 #'                   metrics_currency = 'GBP')
@@ -32,12 +31,21 @@
 #'
 #' }
 get_search_volume <- function(keywords,
-                              api_key,
+                              api_key          = NULL,
                               metrics_location = NULL,
                               metrics_language = NULL,
                               metrics_network  = c('googlesearchnetwork', 'googlesearch'),
                               metrics_currency = NULL,
                               method           = c('get', 'post')){
+
+
+  if (is.null(api_key)){
+    api_key <- options()$keyword_tool_key
+
+    if (is.null(api_key)){
+      stop('No API key given, and none set in options.')
+    }
+  }
 
   # Converting vector of keywords into JSON format
   if (length(keywords) > 800) stop('A maximum 800 keywords are accepted in a single API request.')
